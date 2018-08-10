@@ -1,30 +1,45 @@
+const VERSES: usize = 4;
+
+const DAYS: [&str; VERSES] = [
+    "first",
+    "second",
+    "third",
+    "fourth",
+];
+
+const GIFTS: [&str; VERSES] = [
+    "a partridge in a pear tree",
+    "two turtle doves",
+    "three french hens",
+    "four calling birds",
+];
+
 fn main() {
-    // TODO: struct instead of tuple
-    let verses = [
-        ("first", "a partridge in a pear tree"),
-        ("second", "two turtle doves"),
-        ("third", "three french hens"),
-        ("fourth", "four calling birds"),
-    ];
+    for (verse, &day) in DAYS.iter().enumerate() {
+        print_verse(verse, day);
+    }
+}
 
-    // TODO: enumerate ala Python
-    // TODO: print w/o newline
-    // TODO: print w/o string literal
-    for verse in 0..verses.len() {
-        let day = verses[verse].0;
-        println!("\nOn the {} day of Christmas my true love sent to me:", day);
+fn print_verse(verse: usize, day: &str) {
+    // TODO: Print on one line
+    println!("\nOn the {} day of Christmas my true love sent to me:", day);
 
-        // TODO: Range vs. Slice
-        for verse_lyric in (0..verse + 1).rev() {
-            let lyric = verses[verse_lyric].1;
+    // Print lines for this verse in reverse order, with proper punctuation
+    let gifts = &GIFTS[..=verse];
+    for (line, gift) in gifts.iter().rev().enumerate() {
+        print_line(verse, line, gift);
+    }
+}
 
-            if verse == 0 || (verse == 1 && verse_lyric == 1) {
-                println!("{}", lyric);
-            } else if verse_lyric == 0 {
-                println!("and {}", lyric);
-            } else {
-                println!("{},", lyric);
-            }
-        }
+fn print_line(verse: usize, line: usize, gift: &str) {
+    // TODO: One print w/ conditional format
+    if verse < 2 && line == 0 {
+        // No comma for first line of first two verses
+        println!("{}", gift);
+    } else if verse == line {
+        // Last line
+        println!("and {}", gift);
+    } else {
+        println!("{},", gift);
     }
 }
